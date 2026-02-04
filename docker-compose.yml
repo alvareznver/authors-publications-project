@@ -110,8 +110,9 @@ services:
     networks:
       - editorial-network
     environment:
-      REACT_APP_AUTHORS_API: http://localhost:8001
-      REACT_APP_PUBLICATIONS_API: http://localhost:8002
+      REACT_APP_AUTHORS_API: http://authors-service:8001
+      REACT_APP_PUBLICATIONS_API: http://publications-service:8002
+      SKIP_PREFLIGHT_CHECK: "true"
 
 volumes:
   authors_db_data:
