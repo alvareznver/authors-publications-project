@@ -1,0 +1,121 @@
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+footer {
+  margin-top: auto;
+}
+
+.btn-custom {
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+}
+
+.btn-custom:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: none;
+}
+
+.card-header {
+  background-color: #f8f9fa;
+  border-bottom: 2px solid #007bff;
+  font-weight: 600;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f5f5f5;
+}
+
+.badge-status {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.badge-draft {
+  background-color: #e2e3e5;
+  color: #383d41;
+}
+
+.badge-in-review {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.badge-approved {
+  background-color: #d1ecf1;
+  color: #0c5460;
+}
+
+.badge-published {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.badge-rejected {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.badge-archived {
+  background-color: #d6d8db;
+  color: #383d41;
+}
+
+.form-section {
+  background-color: #f8f9fa;
+  padding: 2rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+}
+
+.spinner-border {
+  color: #007bff;
+}
+
+.error-alert {
+  border-left: 4px solid #dc3545;
+}
+
+.success-alert {
+  border-left: 4px solid #28a745;
+}
+
+.pagination-custom .page-link {
+  color: #007bff;
+}
+
+.pagination-custom .page-link:hover {
+  color: #0056b3;
+  background-color: #f8f9fa;
+}
+
+.text-muted-custom {
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+.input-group-text {
+  background-color: #e9ecef;
+  border: 1px solid #ced4da;
+}
+
+.form-control:focus {
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
