@@ -1,25 +1,46 @@
+# Stage 1: Build
 FROM node:18-alpine AS build
+
 WORKDIR /app
+
+# Copiar archivos de package
 COPY package*.json ./
-RUN npm install --legacy-peer-deps
 
-# Crear estructura de directorios esperada
-RUN mkdir -p src/components src/services public
+# Limpiar caché de npm y instalar dependencias
+RUN npm cache clean --force && \
+    npm install --legacy-peer-deps
 
+# Copiar el resto del código
 COPY . .
 
-# Crear build mínimo si no existe
-RUN npm run build || (mkdir -p build && echo "Build directory created")
+# Variables de entorno para el build
+ENV NODE_ENV=production
+ENV GENERATE_SOURCEMAP=false
+ENV CI=false
 
+# Ejecutar build
+RUN npm run build
+
+# Stage 2: Serve
 FROM nginx:alpine
+
+# Copiar archivos compilados
 COPY --from=build /app/build /usr/share/nginx/html
+
+# Copiar configuración de nginx
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Crear index.html básico si no existe
-RUN if [ ! -f /usr/share/nginx/html/index.html ]; then \
-    mkdir -p /usr/share/nginx/html && \
-    echo '<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Editorial Platform</title></head><body><div id="root"><h1>Editorial Platform is loading...</h1></div><script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/react.production.min.js"></script></body></html>' > /usr/share/nginx/html/index.html; \
-    fi
+# Crear un script de inicio para verificar archivos
+RUN echo '#!/bin/sh' > /docker-entrypoint.sh && \
+    echo 'echo "Checking build files..."' >> /docker-entrypoint.sh && \
+    echo 'ls -la /usr/share/nginx/html/' >> /docker-entrypoint.sh && \
+    echo 'if [ ! -f /usr/share/nginx/html/index.html ]; then' >> /docker-entrypoint.sh && \
+    echo '  echo "ERROR: index.html not found!"' >> /docker-entrypoint.sh && \
+    echo '  exit 1' >> /docker-entrypoint.sh && \
+    echo 'fi' >> /docker-entrypoint.sh && \
+    echo 'exec nginx -g "daemon off;"' >> /docker-entrypoint.sh && \
+    chmod +x /docker-entrypoint.sh
 
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+
+CMD ["/docker-entrypoint.sh"]
