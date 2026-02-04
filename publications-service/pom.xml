@@ -10,7 +10,7 @@
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
-    <name>Publications Service</name>
+    <n>Publications Service</n>
     <description>Microservicio para gestión de publicaciones</description>
 
     <parent>
